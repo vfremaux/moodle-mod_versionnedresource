@@ -1,0 +1,31 @@
+.versions-item {
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border: 1px solid #dfdfdf;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.version-hidden {
+    opacity:0,6;
+    -moz-opacity:0.6;
+}
+
+.version-changes {
+   display:table-row;
+}
+
+.version-changes .label,
+.version-changes .value {
+    display:table-cell;
+    padding-left:10px;
+}
+
+.version-api {
+    display: table-row;
+}
+
+.version-api cell {
+    display: table-cell;
+}
