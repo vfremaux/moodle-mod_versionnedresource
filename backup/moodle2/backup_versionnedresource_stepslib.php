@@ -59,7 +59,7 @@ class backup_versionnedresource_activity_structure_step extends backup_activity_
 
         // Define sources
         $versionnedresource->set_source_table('versionnedresource', array('id' => backup::VAR_ACTIVITYID));
-        $element->set_source_table('versionnedresource_version', array('versionnedresourceid' => backup::VAR_PARENTID));
+        $version->set_source_table('versionnedresource_version', array('versionnedresourceid' => backup::VAR_PARENTID));
 
         if ($userinfo) {
             $subscribe->set_source_table('versionnedresource_user_subs', array('versionnedresourceid' => backup::VAR_PARENTID));

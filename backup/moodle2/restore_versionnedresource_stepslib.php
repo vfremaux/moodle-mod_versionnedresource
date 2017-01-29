@@ -37,13 +37,11 @@ class restore_versionnedresource_activity_structure_step extends restore_activit
         $versionnedresource = new restore_path_element('versionnedresource', '/activity/versionnedresource');
         $paths[] = $versionnedresource;
         $versions = new restore_path_element('versionnedresource_version', '/activity/versionnedresource/versions/version');
-        $paths[] = $elements;
-        $subscribe = new restore_path_element('versionnedresource_subscribe', '/activity/versionnedresource/subscribes/subscribe');
-        $paths[] = $elementitem;
+        $paths[] = $versions;
 
         if ($userinfo) {
-            $subscribe = new restore_path_element('versionnedresource_subscribe', '/activity/versionnedresource/subscribes/subscribe');
-            $paths[] = $elementitem;
+            $subscribes = new restore_path_element('versionnedresource_subscribe', '/activity/versionnedresource/subscribes/subscribe');
+            $paths[] = $subscribes;
         }
 
         // Return the paths wrapped into standard activity structure
@@ -63,21 +61,6 @@ class restore_versionnedresource_activity_structure_step extends restore_activit
         $newitemid = $DB->insert_record('versionnedresource', $data);
         // immediately after inserting "activity" record, call this
         $this->apply_activity_instance($newitemid);
-    }
-
-    protected function after_execute() {
-        global $DB;
-
-        // remap element used to real values
-        if ($used = $DB->get_records('versionnedresource_elementused', array('versionnedresourceid' => $this->get_new_parentid('versionnedresource')))) {
-            foreach ($used as $u) {
-                $u->elementid = $this->get_mappingid('versionnedresource_element', $u->elementid);
-                $DB->update_record('versionnedresource_elementused', $u);
-             }
-        }
-
-        // Add versionnedresource related files, no need to match by itemname (just internally handled context)
-        $this->add_related_files('mod_versionnedresource', 'intro', null);
     }
 
     protected function process_versionnedresource_version($data) {

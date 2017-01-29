@@ -71,7 +71,7 @@ $services = array(
             'mod_versionnedresource_commit_version',
         ),
         'enabled' => 0,
-        'restrictedusers' => 0,
+        'restrictedusers' => 1,
         'shortname' => 'mod_versionnedresource',
         'downloadfiles' => 1,
         'uploadfiles' => 1

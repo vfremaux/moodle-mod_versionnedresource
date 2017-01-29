@@ -59,7 +59,7 @@ class mod_versionnedresource_renderer extends plugin_renderer_base {
 
             foreach ($versions as $v) {
                 if ($v->visible || has_capability('mod/versionnedresource:viewhidden', $context)) {
-                    $str .= $this->version($v);
+                    $str .= $this->version($v, $context);
                 }
             }
             $str .= '</div>';
@@ -72,7 +72,7 @@ class mod_versionnedresource_renderer extends plugin_renderer_base {
         return $str;
     }
 
-    public function version($v) {
+    public function version(&$v, &$context) {
         global $DB;
         static $fs;
 
@@ -109,6 +109,7 @@ class mod_versionnedresource_renderer extends plugin_renderer_base {
                         'itemid' => $v->id);
         $file = $DB->get_record_select('files', $select, $params, 'id,id');
 
+
         if ($file) {
             $file = $fs->get_file_by_id($file->id);
             $contextid = $file->get_contextid();
@@ -118,35 +119,36 @@ class mod_versionnedresource_renderer extends plugin_renderer_base {
                                                              $forcedownload = true);
             $str .= '<a class="download btn latest" href="'.$versionnedurl.'">'.get_string('download', 'versionnedresource').'</a>';
 
-            $context = context::instance_by_id($contextid);
-
-            if (has_capability('mod/versionnedresource:manageversions', $context)) {
-                $params = array('vr' => $this->instance->id, 'vid' => $v->id, 'what' => 'delete', 'sesskey' => sesskey());
-                $removeurl = new moodle_url('/mod/versionnedresource/view.php', $params);
-                $deleteicon = $this->output->pix_icon('t/delete', get_string('deleteversion', 'versionnedresource'));
-                $str .= '<a href="'.$removeurl.'" title="'.get_string('deleteversion', 'versionnedresource').'">'.$deleteicon.'</a>';
-
-                $params = array('vr' => $this->instance->id, 'vid' => $v->id, 'what' => 'edit', 'sesskey' => sesskey());
-                $editurl = new moodle_url('/mod/versionnedresource/versions.php', $params);
-                $editicon = $this->output->pix_icon('t/edit', get_string('editversion', 'versionnedresource'));
-                $str .= '&nbsp;<a href="'.$editurl.'" title="'.get_string('editversion', 'versionnedresource').'">'.$editicon.'</a>';
-
-                if ($v->visible) {
-                    $params = array('vr' => $this->instance->id, 'vid' => $v->id, 'what' => 'hide', 'sesskey' => sesskey());
-                    $editurl = new moodle_url('/mod/versionnedresource/view.php', $params);
-                    $icon = $this->output->pix_icon('t/hide', get_string('hideversion', 'versionnedresource'));
-                    $str .= '&nbsp;<a href="'.$editurl.'" title="'.get_string('hideversion', 'versionnedresource').'">'.$icon.'</a>';
-                } else {
-                    $params = array('vr' => $this->instance->id, 'vid' => $v->id, 'what' => 'show', 'sesskey' => sesskey());
-                    $editurl = new moodle_url('/mod/versionnedresource/view.php', $params);
-                    $icon = $this->output->pix_icon('t/show', get_string('showversion', 'versionnedresource'));
-                    $str .= '&nbsp;<a href="'.$editurl.'" title="'.get_string('showversion', 'versionnedresource').'">'.$icon.'</a>';
-                }
-            }
             $str .= '</div>';
         }
 
+        $str .= '<div class="plugin-get-buttons">';
+        if (has_capability('mod/versionnedresource:manageversions', $context)) {
+            $params = array('vr' => $this->instance->id, 'vid' => $v->id, 'what' => 'delete', 'sesskey' => sesskey());
+            $removeurl = new moodle_url('/mod/versionnedresource/view.php', $params);
+            $deleteicon = $this->output->pix_icon('t/delete', get_string('deleteversion', 'versionnedresource'));
+            $str .= '<a href="'.$removeurl.'" title="'.get_string('deleteversion', 'versionnedresource').'">'.$deleteicon.'</a>';
+
+            $params = array('vr' => $this->instance->id, 'vid' => $v->id, 'what' => 'edit', 'sesskey' => sesskey());
+            $editurl = new moodle_url('/mod/versionnedresource/versions.php', $params);
+            $editicon = $this->output->pix_icon('t/edit', get_string('editversion', 'versionnedresource'));
+            $str .= '&nbsp;<a href="'.$editurl.'" title="'.get_string('editversion', 'versionnedresource').'">'.$editicon.'</a>';
+
+            if ($v->visible) {
+                $params = array('vr' => $this->instance->id, 'vid' => $v->id, 'what' => 'hide', 'sesskey' => sesskey());
+                $editurl = new moodle_url('/mod/versionnedresource/view.php', $params);
+                $icon = $this->output->pix_icon('t/hide', get_string('hideversion', 'versionnedresource'));
+                $str .= '&nbsp;<a href="'.$editurl.'" title="'.get_string('hideversion', 'versionnedresource').'">'.$icon.'</a>';
+            } else {
+                $params = array('vr' => $this->instance->id, 'vid' => $v->id, 'what' => 'show', 'sesskey' => sesskey());
+                $editurl = new moodle_url('/mod/versionnedresource/view.php', $params);
+                $icon = $this->output->pix_icon('t/show', get_string('showversion', 'versionnedresource'));
+                $str .= '&nbsp;<a href="'.$editurl.'" title="'.get_string('showversion', 'versionnedresource').'">'.$icon.'</a>';
+            }
+        }
         $str .= '</div>';
+        $str .= '</div>';
+
         if (!empty($v->docurl)) {
             $str .= '<div class="version-actions">';
             $str .= '<a class="btn btn-link action-view" href="'.$v->docurl.'">'.get_string('learnmore', 'versionnedresource').'</a>';

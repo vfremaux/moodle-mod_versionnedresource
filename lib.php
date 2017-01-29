@@ -106,7 +106,7 @@ function versionnedresource_update_instance($data, $mform) {
 function versionnedresource_delete_instance($id) {
     global $DB, $COURSE;
 
-    if (!$vr = $DB->get_record('versionnedresrource', array('id' => $id))) {
+    if (!$vr = $DB->get_record('versionnedresource', array('id' => $id))) {
         return false;
     }
 
@@ -114,7 +114,7 @@ function versionnedresource_delete_instance($id) {
 
     $DB->delete_records('versionnedresource_version', array('versionnedresourceid' => $vr->id));
     $DB->delete_records('versionnedresource_user_subs', array('versionnedresourceid' => $vr->id));
-    $DB->delete_records('versionnedresource', array('id' => $page->id));
+    $DB->delete_records('versionnedresource', array('id' => $vr->id));
 
     return true;
 }

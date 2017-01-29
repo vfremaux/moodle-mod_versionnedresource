@@ -67,14 +67,13 @@ class mod_versionnedresource_external extends external_api {
         // Explicit mapping avoids injection.
         switch ($vridsource) {
             case 'idnumber':
-                $field = 'idnumber';
+                $vrid = self::get_vr_from_idnumber($vrid);
                 break;
             default:
-                $field = 'id';
                 break;
         }
 
-        $vr = $DB->get_record('versionnedresource', array($field => $vrid));
+        $vr = $DB->get_record('versionnedresource', array('id' => $vrid));
         $params = array('versionnedresourceid' => $vr->id, 'visible' => 1);
         $versions = $DB->get_records('versionnedresource_version', $params, 'branch DESC, version ASC');
 
@@ -227,14 +226,13 @@ class mod_versionnedresource_external extends external_api {
         // Explicit mapping avoids injection.
         switch ($vridsource) {
             case 'idnumber':
-                $field = 'idnumber';
+                $vrid = self::get_vr_from_idnumber($vrid);
                 break;
             default:
-                $field = 'id';
                 break;
         }
 
-        $vr = $DB->get_record('versionnedresource', array($field => $vrid));
+        $vr = $DB->get_record('versionnedresource', array('id' => $vrid));
 
         // Search candidate version and get first one
 
@@ -271,7 +269,8 @@ class mod_versionnedresource_external extends external_api {
                 'vridsource' => new external_value(PARAM_ALPHA, 'source for the id, can be either \'id\' or \'idnumber\''),
                 'vrid' => new external_value(PARAM_TEXT, 'Resource id'),
                 'draftitemid' => new external_value(PARAM_INT, 'Waiting draftitem'),
-                'jsoninfo' => new external_value(PARAM_TEXT, 'Json serialized info for the version record')
+                'jsoninfo' => new external_value(PARAM_TEXT, 'Json serialized info for the version record'),
+                'hideprevious' => new external_value(PARAM_TEXT, 'Hide control, can be \'no\', \'branch\' or \'module\'', VALUE_DEFAULT, 'no', true)
             )
         );
     }
@@ -285,23 +284,33 @@ class mod_versionnedresource_external extends external_api {
      *
      * @return external_description
      */
-    public static function commit_version($vridsource, $vrid, $draftitemid, $jsoninfo) {
+    public static function commit_version($vridsource, $vrid, $draftitemid, $jsoninfo, $hideprevious = 'no') {
         global $CFG;
 
         $parameters = array(
-            'vridsource'  => $vridsource,
-            'vrid'  => $vrid,
-            'draftitemid'  => $draftitemid,
-            'jsoninfo'  => $jsoninfo
+            'vridsource' => $vridsource,
+            'vrid' => $vrid,
+            'draftitemid' => $draftitemid,
+            'jsoninfo' => $jsoninfo,
+            'hideprevious' => $hideprevious
         );
         $params = self::validate_parameters(self::commit_version_parameters(), $parameters);
 
-        if (versionned_resource::plugin_supports('api/commit')) {
+        // Explicit mapping avoids injection.
+        switch ($vridsource) {
+            case 'idnumber':
+                $vrid = self::get_vr_from_idnumber($vrid);
+                break;
+            default:
+                break;
+        }
+
+        if (versionned_resource::supports_feature('api/commit')) {
             include_once($CFG->dirroot.'/mod/versionnedresource/pro/lib.php');
-            $vid = mod_versionned_resource_commit($vridsource, $vrid, $draftitemid, $jsoninfo);
+            $vid = mod_versionnedresource_commit($vrid, $draftitemid, $jsoninfo, $hideprevious);
             return $vid;
         } else {
-            throw new moodle_exception('unsupportedinversion');
+            throw new moodle_exception('unsupportedversion');
         }
     }
 
@@ -314,4 +323,21 @@ class mod_versionnedresource_external extends external_api {
         return new external_value(PARAM_INT, 'Version id');
     }
 
+    public static function get_vr_from_idnumber($idnumber) {
+        global $DB;
+
+        $cms = $DB->get_records('course_modules', array('idnumber' => $idnumber));
+
+        if (!$cms) {
+            throw new moodle_exception('nocoursemodulematch');
+        }
+
+        if (count($cms) > 2) {
+            throw new moodle_exception('vridshouldbeunique');
+        }
+
+        $cm = array_pop($cms);
+
+        return $cm->instance;
+    }
 }

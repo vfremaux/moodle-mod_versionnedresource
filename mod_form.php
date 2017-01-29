@@ -44,7 +44,7 @@ class mod_versionnedresource_mod_form extends moodleform_mod {
         $mform->addRule('name', null, 'required', null, 'client');
         $mform->addRule('name', get_string('maximumchars', '', 255), 'maxlength', 255, 'client');
 
-        $this->add_intro_editor();
+        $this->standard_intro_elements();
 
         $mform->addElement('text', 'docurl', get_string('docurl', 'versionnedresource'), array('size' => '80', 'maxlength' => 255));
         $mform->setType('docurl', PARAM_URL);

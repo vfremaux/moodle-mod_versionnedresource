@@ -53,7 +53,7 @@ $context = context_module::instance($cm->id);
 require_capability('mod/versionnedresource:view', $context);
 
 if ($action) {
-    include_once($CFG->dirroot.'/mos/versionnedresource/view.controller.php');
+    include_once($CFG->dirroot.'/mod/versionnedresource/view.controller.php');
     $controller = new \mod_versionnedresource\view_controller($instance);
     $controller->receive($action);
     $controller->process($action);

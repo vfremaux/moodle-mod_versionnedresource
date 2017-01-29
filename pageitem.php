@@ -34,7 +34,7 @@ require_once($CFG->dirroot.'/mod/versionnedresource/locallib.php');
  * @param object $block a page_module block surrounding the customlabel resource.
  */
 function versionnedresource_set_instance(&$block) {
-    global $USER, $CFG, $COURSE, $DB;
+    global $COURSE, $DB, $PAGE;
 
     // Transfer content from title to content.
     $block->title = '';
@@ -42,18 +42,12 @@ function versionnedresource_set_instance(&$block) {
     // Fake unpacks object's load.
     $vresource = $DB->get_record('versionnedresource', array('id' => $block->cm->instance));
 
+    $str = '';
     $context = context_module::instance($block->cm->id);
-
-    $completioninfo = new completion_info($COURSE);
-    $modinfo = get_fast_modinfo($COURSE);
-    $mod = $modinfo->cms[$block->cm->id];
-    $sectionreturn = $block->cm->section;
-    $formatrenderer = $PAGE->get_renderer('format_page');
-    $str .= $formatrenderer->print_cm($COURSE, $mod);
 
     $instance = new versionned_resource($vresource);
     $versions = $instance->get_versions();
-    $renderer = $PAGE->get_renderer('versionnedresourcee');
+    $renderer = $PAGE->get_renderer('versionnedresource');
 
     $str .= $renderer->header($vresource);
     $str .= $renderer->versions($versions, $context);

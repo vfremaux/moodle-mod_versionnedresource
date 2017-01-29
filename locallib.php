@@ -92,7 +92,7 @@ class versionned_resource {
     public function get_versions() {
         global $DB;
 
-        return $DB->get_records('versionnedresource_version', array('versionnedresourceid' => $this->record->id), 'branch DESC,version ASC');
+        return $DB->get_records('versionnedresource_version', array('versionnedresourceid' => $this->record->id), 'branch DESC,internalversion DESC');
     }
 
     /**

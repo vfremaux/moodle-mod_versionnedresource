@@ -43,7 +43,7 @@ class restore_versionnedresource_activity_task extends restore_activity_task {
      */
     protected function define_my_steps() {
         // vodeclic only has one structure step
-        $this->add_step(new restore_versionnedresource_activity_structure_step('versionnedresource_structure', 'tracker.xml'));
+        $this->add_step(new restore_versionnedresource_activity_structure_step('versionnedresource_structure', 'versionnedresource.xml'));
     }
 
     /**
