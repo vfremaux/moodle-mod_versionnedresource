@@ -1,5 +1,4 @@
 <?php
-
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -16,9 +15,10 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * @package    mod
- * @subpackage versionnedresource
- * @copyright  2010 onwards Valery Fremaux {valery.fremaux@club-internet.fr}
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package     mod_versionnedresource
+ * @category    mod
+ * @author      Valery Fremaux {valery.fremaux@gmail.com}
+ * @copyright   2016 onwards Valery Fremaux {http://www.mylearningfactory.com}
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
+defined('MOODLE_INTERNAL') || die;

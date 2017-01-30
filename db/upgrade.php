@@ -17,12 +17,13 @@
 /**
  * upgrade processes for this module.
  *
- * @package     mod_versionresource
+ * @package     mod_versionnedresource
  * @category    mod
  * @author      Valery Fremaux <valery.fremaux@gmail.com>
  * @copyright   2016 Valery Fremaux (http://www.mylearningfactory.com)
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+defined('MOODLE_INTERNAL') || die();
 
 function xmldb_versionnedresource_upgrade($oldversion = 0) {
     global $DB;

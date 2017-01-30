@@ -23,6 +23,7 @@
  * @copyright   2016 Valery Fremaux (http://www.mylearningfactory.com)
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+defined('MOODLE_INTERNAL') || die();
 
 $key = 'versionnedresource/defaultusedoc';
 $label = get_string('configdefaultusedoc', 'versionnedresource');

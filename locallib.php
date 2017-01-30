@@ -92,7 +92,8 @@ class versionned_resource {
     public function get_versions() {
         global $DB;
 
-        return $DB->get_records('versionnedresource_version', array('versionnedresourceid' => $this->record->id), 'branch DESC,internalversion DESC');
+        $params = array('versionnedresourceid' => $this->record->id);
+        return $DB->get_records('versionnedresource_version', $params, 'branch DESC,internalversion DESC');
     }
 
     /**
@@ -103,9 +104,9 @@ class versionned_resource {
     static public function supports_feature($feature) {
         global $CFG;
         static $supports;
-    
+
         $config = get_config('report_trainingsessions');
-    
+
         if (!isset($supports)) {
             $supports = array(
                 'pro' => array(
@@ -117,7 +118,7 @@ class versionned_resource {
             );
             $prefer = array();
         }
-    
+
         // Check existance of the 'pro' dir in plugin.
         if (is_dir(__DIR__.'/pro')) {
             if ($feature == 'emulate/community') {
@@ -131,22 +132,22 @@ class versionned_resource {
         } else {
             $versionkey = 'community';
         }
-    
+
         list($feat, $subfeat) = explode('/', $feature);
     
         if (!array_key_exists($feat, $supports[$versionkey])) {
             return false;
         }
-    
+
         if (!in_array($subfeat, $supports[$versionkey][$feat])) {
             return false;
         }
-    
+
         // Special condition for pdf dependencies.
         if (($feature == 'format/pdf') && !is_dir($CFG->dirroot.'/local/vflibs')) {
             return false;
         }
-    
+
         if (in_array($feat, $supports['community'])) {
             if (in_array($subfeat, $supports['community'][$feat])) {
                 // If community exists, default path points community code.
@@ -158,7 +159,7 @@ class versionned_resource {
                 }
             }
         }
-    
+
         return $versionkey;
     }
 }

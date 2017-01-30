@@ -52,7 +52,8 @@ echo $OUTPUT->header();
 echo $OUTPUT->heading($strresources);
 
 if (!$resources = get_all_instances_in_course('versionnedresource', $course)) {
-    echo $OUTPUT->notification(get_string('thereareno', 'moodle', $strresources), "$CFG->wwwroot/course/view.php?id=$course->id");
+    $returnurl = new moodle_url('/course/view.php', array('id' => $course->id));
+    echo $OUTPUT->notification(get_string('thereareno', 'moodle', $strresources), $returnurl);
     echo $OUTPUT->footer();
     exit;
 }
@@ -92,11 +93,12 @@ foreach ($resources as $resource) {
     $extra = empty($cm->extra) ? '' : $cm->extra;
     $icon = '';
     if (!empty($cm->icon)) {
-        // each resource file has an icon in 2.0
-        $icon = '<img src="'.$OUTPUT->pix_url($cm->icon).'" class="activityicon" alt="'.get_string('modulename', $cm->modname).'" /> ';
+        // Each resource file has an icon in 2.0.
+        $pixurl = $OUTPUT->pix_url($cm->icon);
+        $icon = '<img src="'.$pixurl.'" class="activityicon" alt="'.get_string('modulename', $cm->modname).'" /> ';
     }
 
-    $class = $resource->visible ? '' : 'class="dimmed"'; // hidden modules are dimmed
+    $class = $resource->visible ? '' : 'class="dimmed"'; // Hidden modules are dimmed.
     $table->data[] = array (
         $printsection,
         "<a $class $extra href=\"view.php?id=$cm->id\">".$icon.format_string($resource->name)."</a>",

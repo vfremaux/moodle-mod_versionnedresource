@@ -23,7 +23,6 @@
  * @copyright   2016 Valery Fremaux (http://www.mylearningfactory.com)
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
 defined('MOODLE_INTERNAL') || die;
 
 require_once($CFG->dirroot.'/lib/externallib.php');
@@ -37,9 +36,10 @@ class mod_versionnedresource_external extends external_api {
      * @return external_function_parameters
      */
     public static function get_version_info_parameters() {
+        $desc = 'Source for versionresource identifier, can be \'id\' or \'idnumber\'';
         return new external_function_parameters(
             array(
-                'vridsource'  => new external_value(PARAM_ALPHA, 'Source for versionresource identifier, can be \'id\' or \'idnumber\''),
+                'vridsource'  => new external_value(PARAM_ALPHA, $desc),
                 'vrid'  => new external_value(PARAM_TEXT, 'Version resource id')
             )
         );
@@ -173,7 +173,8 @@ class mod_versionnedresource_external extends external_api {
 
             $filepath = $file->get_filepath();
             $filename = $file->get_filename();
-            return self::make_file_url($urlbase, "/{$context->id}/mod_versionnedresource/artifact/{$version->id}".$filepath.$filename, true);
+            $path = "/{$context->id}/mod_versionnedresource/artifact/{$version->id}";
+            return self::make_file_url($urlbase, $path.$filepath.$filename, true);
         }
 
         throw new moodle_exception('missingfile');
@@ -240,7 +241,7 @@ class mod_versionnedresource_external extends external_api {
         $candidates = $DB->get_records('versionnedresource_version', $params, 'version DESC', '*', 0, 1);
         if ($candidates) {
             $candidate = array_pop($candidates);
-    
+
             return self::get_version_file_url($candidate->id);
         }
 
@@ -264,13 +265,14 @@ class mod_versionnedresource_external extends external_api {
      * @return external_function_parameters
      */
     public static function commit_version_parameters() {
+        $deschide = 'Hide control, can be \'no\', \'branch\' or \'module\'';
         return new external_function_parameters(
             array(
                 'vridsource' => new external_value(PARAM_ALPHA, 'source for the id, can be either \'id\' or \'idnumber\''),
                 'vrid' => new external_value(PARAM_TEXT, 'Resource id'),
                 'draftitemid' => new external_value(PARAM_INT, 'Waiting draftitem'),
                 'jsoninfo' => new external_value(PARAM_TEXT, 'Json serialized info for the version record'),
-                'hideprevious' => new external_value(PARAM_TEXT, 'Hide control, can be \'no\', \'branch\' or \'module\'', VALUE_DEFAULT, 'no', true)
+                'hideprevious' => new external_value(PARAM_TEXT, $deschide, VALUE_DEFAULT, 'no', true)
             )
         );
     }
