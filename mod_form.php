@@ -47,10 +47,10 @@ class mod_versionnedresource_mod_form extends moodleform_mod {
         $this->standard_intro_elements();
 
         $mform->addElement('text', 'docurl', get_string('docurl', 'versionnedresource'), array('size' => '80', 'maxlength' => 255));
-        $mform->setType('docurl', PARAM_URL);
+        $mform->setType('docurl', PARAM_TEXT);
 
         $mform->addElement('text', 'giturl', get_string('giturl', 'versionnedresource'), array('size' => '80', 'maxlength' => 255));
-        $mform->setType('giturl', PARAM_URL);
+        $mform->setType('giturl', PARAM_TEXT);
 
         //-------------------------------------------------------
         $mform->addElement('header', 'versionhdr', get_string('versiondata', 'versionnedresource'));
