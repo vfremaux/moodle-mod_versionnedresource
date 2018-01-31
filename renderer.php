@@ -82,7 +82,7 @@ class mod_versionnedresource_renderer extends plugin_renderer_base {
 
         $str = '';
 
-        $visibleclass = ($v->visible) ? 'version-visible' : 'version-hidden' ;
+        $visibleclass = ($v->visible) ? 'version-visible' : 'version-hidden';
 
         $str .= '<div class="versions-item clearfix '.$visibleclass.'" id="version-'.$v->id.'">';
         $str .= '<div class="row-fluid">';
@@ -103,12 +103,17 @@ class mod_versionnedresource_renderer extends plugin_renderer_base {
         $str .= '<div class="actions span6">';
         $str .= '<div class="downloadcell">';
 
-        $select = " component = :component AND filearea = :filearea AND itemid = :itemid AND filename IS NOT NULL AND filename != '.' ";
+        $select = '
+            component = :component AND
+            filearea = :filearea AND
+            itemid = :itemid AND
+            filename IS NOT NULL AND
+            filename != \'.\'
+        ';
         $params = array('component' => 'mod_versionnedresource',
                         'filearea' => 'artifact',
                         'itemid' => $v->id);
         $file = $DB->get_record_select('files', $select, $params, 'id,id');
-
 
         if ($file) {
             $file = $fs->get_file_by_id($file->id);
@@ -151,12 +156,14 @@ class mod_versionnedresource_renderer extends plugin_renderer_base {
 
         if (!empty($v->docurl)) {
             $str .= '<div class="version-actions">';
-            $str .= '<a class="btn btn-link action-view" href="'.$v->docurl.'">'.get_string('learnmore', 'versionnedresource').'</a>';
+            $learnmorestr = get_string('learnmore', 'versionnedresource');
+            $str .= '<a class="btn btn-link action-view" href="'.$v->docurl.'">'.$learnmorestr.'</a>';
             $str .= '</div>';
         }
         if (!empty($v->giturl)) {
             $str .= '<div class="version-actions">';
-            $str .= '<a class="btn btn-link action-view" href="'.$v->giturl.'">'.get_string('gitrepo', 'versionnedresource').'</a>';
+            $gitrepostr = get_string('gitrepo', 'versionnedresource');
+            $str .= '<a class="btn btn-link action-view" href="'.$v->giturl.'">'.$gitrepostr.'</a>';
             $str .= '</div>';
         }
         $str .= '</div>';

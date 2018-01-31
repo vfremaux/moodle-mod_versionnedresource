@@ -46,20 +46,24 @@ class mod_versionnedresource_mod_form extends moodleform_mod {
 
         $this->standard_intro_elements();
 
-        $mform->addElement('text', 'docurl', get_string('docurl', 'versionnedresource'), array('size' => '80', 'maxlength' => 255));
-        $mform->setType('docurl', PARAM_URL);
+        $label = get_string('docurl', 'versionnedresource');
+        $mform->addElement('text', 'docurl', $label, array('size' => '80', 'maxlength' => 255));
+        $mform->setType('docurl', PARAM_TEXT);
 
-        $mform->addElement('text', 'giturl', get_string('giturl', 'versionnedresource'), array('size' => '80', 'maxlength' => 255));
-        $mform->setType('giturl', PARAM_URL);
+        $label = get_string('giturl', 'versionnedresource');
+        $mform->addElement('text', 'giturl', $label, array('size' => '80', 'maxlength' => 255));
+        $mform->setType('giturl', PARAM_TEXT);
 
-        //-------------------------------------------------------
         $mform->addElement('header', 'versionhdr', get_string('versiondata', 'versionnedresource'));
 
-        $mform->addElement('textarea', 'branches', get_string('branches', 'versionnedresource'), array('cols' => '80', 'rows' => 10));
+        $label = get_string('branches', 'versionnedresource');
+        $mform->addElement('textarea', 'branches', $label, array('cols' => '80', 'rows' => 10));
 
-        $mform->addElement('textarea', 'maturities', get_string('maturities', 'versionnedresource'), array('cols' => '80', 'rows' => 10));
+        $label = get_string('maturities', 'versionnedresource');
+        $mform->addElement('textarea', 'maturities', $label, array('cols' => '80', 'rows' => 10));
 
-        $mform->addElement('textarea', 'extracss', get_string('extracss', 'versionnedresource'), array('cols' => '80', 'rows' => 10));
+        $label = get_string('extracss', 'versionnedresource');
+        $mform->addElement('textarea', 'extracss', $label, array('cols' => '80', 'rows' => 10));
 
         $this->standard_coursemodule_elements();
 

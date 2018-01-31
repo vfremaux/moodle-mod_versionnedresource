@@ -15,13 +15,12 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * @package mod_versionnedresource
- * @copyright 2010 onwards Valery Fremaux (valery.freamux@club-internet.fr)
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
-
-/**
- * Define all the restore steps that will be used by the restore_url_activity_task
+ * Define all the restore steps that will be used by the restore_versionnedresource_activity_task
+ *
+ * @package     mod_versionnedresource
+ * @category    mod
+ * @copyright   2016 onwards Valery Fremaux (valery.fremaux@club-internet.fr)
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 /**
@@ -40,11 +39,12 @@ class restore_versionnedresource_activity_structure_step extends restore_activit
         $paths[] = $versions;
 
         if ($userinfo) {
-            $subscribes = new restore_path_element('versionnedresource_subscribe', '/activity/versionnedresource/subscribes/subscribe');
+            $path = '/activity/versionnedresource/subscribes/subscribe';
+            $subscribes = new restore_path_element('versionnedresource_subscribe', $path);
             $paths[] = $subscribes;
         }
 
-        // Return the paths wrapped into standard activity structure
+        // Return the paths wrapped into standard activity structure.
         return $this->prepare_activity_structure($paths);
     }
 

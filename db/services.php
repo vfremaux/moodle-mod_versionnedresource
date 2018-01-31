@@ -15,12 +15,14 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Forum external functions and service definitions.
+ * Capability definitions for this module.
  *
- * @package    mod_versionnedresource
- * @copyright  2012 Mark Nelson <markn@moodle.com>
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package     mod_versionnedresource
+ * @category    mod
+ * @copyright   2016 onwards Valery Fremaux (valery.fremaux@gmail.com)
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+defined('MOODLE_INTERNAL') || die();
 
 $functions = array(
 
@@ -63,7 +65,7 @@ $functions = array(
 );
 
 $services = array(
-    'Moodle Versionned Resource API'  => array(
+    'Moodle Versionned Resource API' => array(
         'functions' => array (
             'mod_versionnedresource_get_version_info',
             'mod_versionnedresource_get_last_branch_file_url',

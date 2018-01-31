@@ -17,9 +17,12 @@
 /**
  * Capability definitions for this module.
  *
- * @package   mod_versionnedresource
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package     mod_versionnedresource
+ * @category    mod
+ * @copyright   2016 onwards Valery Fremaux (valery.fremaux@gmail.com)
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+defined('MOODLE_INTERNAL') || die();
 
 $capabilities = array(
 

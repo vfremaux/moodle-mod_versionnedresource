@@ -110,7 +110,7 @@ function versionnedresource_delete_instance($id) {
         return false;
     }
 
-    // note: all context files are deleted automatically
+    // Note: all context files are deleted automatically.
 
     $DB->delete_records('versionnedresource_version', array('versionnedresourceid' => $vr->id));
     $DB->delete_records('versionnedresource_user_subs', array('versionnedresourceid' => $vr->id));

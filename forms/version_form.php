@@ -37,7 +37,7 @@ class version_form extends moodleform {
 
         $mform = $this->_form;
 
-        $maxbytes = $COURSE->maxbytes; // TODO: add some setting
+        $maxbytes = $COURSE->maxbytes; // TODO: add some setting.
         $this->fileoptions = array('subdirs' => false, 'maxfiles' => 1, 'maxbytes' => $maxbytes);
 
         $mform->addElement('hidden', 'vid');
@@ -49,7 +49,9 @@ class version_form extends moodleform {
         if (!$this->_customdata['vid']) {
             $mform->addElement('filepicker', 'versionfile', get_string('artifact', 'versionnedresource'), $this->fileoptions);
         } else {
-            $mform->addElement('static', 'versionfileadvice', get_string('artifact', 'versionnedresource'), get_string('artifactlocked', 'versionnedresource'));
+            $label = get_string('artifact', 'versionnedresource');
+            $desc = get_string('artifactlocked', 'versionnedresource');
+            $mform->addElement('static', 'versionfileadvice', $label, $desc);
         }
 
         if (empty($this->_customdata['branches'])) {
@@ -86,7 +88,9 @@ class version_form extends moodleform {
             $mform->setType('giturl', PARAM_URL);
         }
 
-        $mform->addElement('checkbox', 'minorrelease', get_string('minorrelease', 'versionnedresource'), get_string('minorrelease_desc', 'versionnedresource'));
+        $label = get_string('minorrelease', 'versionnedresource');
+        $desc = get_string('minorrelease_desc', 'versionnedresource');
+        $mform->addElement('checkbox', 'minorrelease', $label, $desc);
 
         $this->add_action_buttons();
     }
