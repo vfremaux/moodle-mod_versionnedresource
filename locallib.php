@@ -89,40 +89,11 @@ class versionned_resource {
         $DB->set_field('versionnedresource_version', 'visible', 1, array('id' => $versionid));
     }
 
-    /**
-     * Get resources versions
-     * @param bool $last if true, will only return one result per branch.
-     */
-    public function get_versions($last = false, $showhidden = true) {
-        global $DB, $USER;
+    public function get_versions() {
+        global $DB;
 
         $params = array('versionnedresourceid' => $this->record->id);
-
-        if (!$showhidden) {
-            $params['visible'] = 1;
-        }
-
-        // Add eventual personal filter.
-        if ($preferedbranch = $DB->get_field('user_preferences', 'value', array('name' => 'versionned_resource_branch', 'userid' => $USER->id))) {
-            $params['branch'] = $preferedbranch;
-        }
-
-        $allversions = $DB->get_records('versionnedresource_version', $params, 'branch DESC, internalversion DESC');
-
-        if (!$last) {
-            return $allversions;
-        }
-
-        // Keep only one version per branch (highest).
-        $branches = array();
-        $last = array();
-        foreach ($allversions as $version) {
-            if (!in_array($version->branch, $branches)) {
-                $branches[] = $version->branch;
-                $last[$version->id] = $version;
-            }
-        }
-        return $last;
+        return $DB->get_records('versionnedresource_version', $params, 'branch DESC,internalversion DESC');
     }
 
     /**
@@ -163,7 +134,7 @@ class versionned_resource {
         }
 
         list($feat, $subfeat) = explode('/', $feature);
-
+    
         if (!array_key_exists($feat, $supports[$versionkey])) {
             return false;
         }

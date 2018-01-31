@@ -46,14 +46,11 @@ function versionnedresource_set_instance(&$block) {
     $context = context_module::instance($block->cm->id);
 
     $instance = new versionned_resource($vresource);
-    $versions = $instance->get_versions(true, false);
+    $versions = $instance->get_versions();
     $renderer = $PAGE->get_renderer('versionnedresource');
-    $renderer->set_instance($vresource);
-    $renderer->set_context($context);
 
-    $str .= $renderer->header();
-    $str .= $renderer->versions($versions);
-    $str .= $renderer->viewlink();
+    $str .= $renderer->header($vresource);
+    $str .= $renderer->versions($versions, $context);
 
     // Do NOT format text here!
     $block->content->text = $str;

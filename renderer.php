@@ -40,51 +40,16 @@ class mod_versionnedresource_renderer extends plugin_renderer_base {
         $this->context = $context;
     }
 
-    public function header() {
+    public function header($instance) {
         $str = '';
 
-        $str .= '<h2>'.$this->instance->name.'</h2>';
-        $str .= '<div class="versionned-description">'.format_text($this->instance->intro, $this->instance->introformat).'</div>';
+        $str .= '<h2>'.$instance->name.'</h2>';
+        $str .= '<div class="versionned-description">'.format_text($instance->intro, $instance->introformat).'</div>';
 
         return $str;
     }
 
-    public function viewlink() {
-        if (has_capability('mod/versionnedresource:manageversions', $this->context)) {
-            $managestr = get_string('manage', 'mod_versionnedresource');
-            $params = array('vr' => $this->instance->id);
-            $manageurl = new moodle_url('/mod/versionnedresource/view.php', $params);
-            $str .= '<div class="versions-manage">';
-            $str .= '<a href="'.$manageurl.'"><input type="button" value="'.$managestr.'"></a>';
-            $str .= '</div>';
-        }
-    }
-
-    public function branch_preference_filter() {
-        global $USER, $DB, $OUTPUT, $FULLME;
-
-        $params = array('name' => 'versioned_resource_branch', 'userid' => $USER->id);
-        $branchpreference = $DB->get_field('user_peferences', 'value', $params);
-
-        $newpref = optional_param('branchpref', false, PARAM_TEXT);
-        if ($newpref) {
-            $DB->set_field('user_peferences', 'value', $newpref, $params);
-            $branchpreference = $newpref;
-        }
-        if ($newpref === '') {
-            $DB->delete_records('user_peferences', $params);
-            $branchpreference = '';
-        }
-
-        $branchoptions = array('' => get_string('none', 'versionnedresource'));
-        $branchoptions = $branchoptions + $this->instance->get_branches();
-
-        $str = get_string('myprefbranch', 'versionnedresource');
-        $str .= ': ';
-        $str .= $OUTPUT->single_select($FULLME, 'branchpref', $branchoptions, $branchpreference);
-    }
-
-    public function versions($versions) {
+    public function versions($versions, $context) {
 
         $str = '';
 
@@ -93,8 +58,8 @@ class mod_versionnedresource_renderer extends plugin_renderer_base {
             $str .= '<h3>'.get_string('currentversions', 'versionnedresource').'</h3>';
 
             foreach ($versions as $v) {
-                if ($v->visible || has_capability('mod/versionnedresource:viewhidden', $this->context)) {
-                    $str .= $this->version($v, $this->context);
+                if ($v->visible || has_capability('mod/versionnedresource:viewhidden', $context)) {
+                    $str .= $this->version($v, $context);
                 }
             }
             $str .= '</div>';
@@ -107,7 +72,7 @@ class mod_versionnedresource_renderer extends plugin_renderer_base {
         return $str;
     }
 
-    public function version(&$v) {
+    public function version(&$v, &$context) {
         global $DB;
         static $fs;
 
@@ -163,7 +128,7 @@ class mod_versionnedresource_renderer extends plugin_renderer_base {
         }
 
         $str .= '<div class="plugin-get-buttons">';
-        if (has_capability('mod/versionnedresource:manageversions', $this->context)) {
+        if (has_capability('mod/versionnedresource:manageversions', $context)) {
             $params = array('vr' => $this->instance->id, 'vid' => $v->id, 'what' => 'delete', 'sesskey' => sesskey());
             $removeurl = new moodle_url('/mod/versionnedresource/view.php', $params);
             $deleteicon = $this->output->pix_icon('t/delete', get_string('deleteversion', 'versionnedresource'));
