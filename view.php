@@ -73,8 +73,8 @@ echo $OUTPUT->header();
 
 $versions = $instance->get_versions();
 
-echo $renderer->header($vresource);
-echo $renderer->versions($versions, $context);
+echo $renderer->header();
+echo $renderer->versions($versions);
 
 if (has_capability('mod/versionnedresource:manageversions', $context)) {
 

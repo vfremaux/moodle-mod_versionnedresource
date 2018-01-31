@@ -45,7 +45,7 @@ class backup_versionnedresource_activity_task extends backup_activity_task {
      */
     protected function define_my_steps() {
         // Choice only has one structure step.
-        $step = new backup_versionnedresource_activity_structure_step('versionnedresource_structure', 'versionnedresource.xml')
+        $step = new backup_versionnedresource_activity_structure_step('versionnedresource_structure', 'versionnedresource.xml');
         $this->add_step($step);
     }
 

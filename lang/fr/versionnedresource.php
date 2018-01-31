@@ -21,7 +21,7 @@ $string['versionnedresource:viewhidden'] = 'Peut voir les versions cachées';
 $string['versionnedresource:manageversions'] = 'Peut gérer les versions';
 
 $string['artifact'] = 'Ficher ressource';
-$string['artifactlocked'] = 'Le fichier ressource ne peut petre modifié';
+$string['artifactlocked'] = 'Le fichier ressource ne peut être modifié';
 $string['modulename'] = 'Ressource versionnée';
 $string['modulenameplural'] = 'Ressources versionnées';
 $string['pluginname'] = 'Ressource versionnée';

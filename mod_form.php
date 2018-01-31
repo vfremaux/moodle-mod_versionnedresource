@@ -50,7 +50,7 @@ class mod_versionnedresource_mod_form extends moodleform_mod {
         $mform->addElement('text', 'docurl', $label, array('size' => '80', 'maxlength' => 255));
         $mform->setType('docurl', PARAM_TEXT);
 
-        $label = get_string('giturl', 'versionnedresource')
+        $label = get_string('giturl', 'versionnedresource');
         $mform->addElement('text', 'giturl', $label, array('size' => '80', 'maxlength' => 255));
         $mform->setType('giturl', PARAM_TEXT);
 
