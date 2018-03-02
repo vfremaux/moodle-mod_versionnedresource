@@ -99,9 +99,10 @@ foreach ($resources as $resource) {
     }
 
     $class = $resource->visible ? '' : 'class="dimmed"'; // Hidden modules are dimmed.
+    $viewurl = new moodle_url('/mod/versionnedresource/view.php', array('id' => $cm->id));
     $table->data[] = array (
         $printsection,
-        "<a $class $extra href=\"view.php?id=$cm->id\">".$icon.format_string($resource->name)."</a>",
+        '<a $class '.$extra.' href="'.$viewurl.'">'.$icon.format_string($resource->name).'</a>',
         format_module_intro('versionnedresource', $resource, $cm->id));
 }
 
