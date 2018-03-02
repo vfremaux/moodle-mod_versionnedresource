@@ -63,7 +63,7 @@ $params = array('instance' => $instance);
 if (!empty($vresource->branches)) {
     $items = explode("\n", $vresource->branches);
 
-    foreach($items as &$it) {
+    foreach ($items as &$it) {
         $it = trim($it);
     }
 
@@ -73,7 +73,7 @@ if (!empty($vresource->branches)) {
 if (!empty($vresource->maturities)) {
     $items = explode("\n", $vresource->maturities);
 
-    foreach($items as &$it) {
+    foreach ($items as &$it) {
         $it = trim($it);
     }
 
