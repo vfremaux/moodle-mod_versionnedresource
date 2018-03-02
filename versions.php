@@ -62,11 +62,21 @@ $PAGE->set_heading($course->fullname);
 $params = array('instance' => $instance);
 if (!empty($vresource->branches)) {
     $items = explode("\n", $vresource->branches);
+
+    foreach($items as &$it) {
+        $it = trim($it);
+    }
+
     $params['branches'] = array_combine($items, $items);
 }
 
 if (!empty($vresource->maturities)) {
     $items = explode("\n", $vresource->maturities);
+
+    foreach($items as &$it) {
+        $it = trim($it);
+    }
+
     $params['maturities'] = array_combine($items, $items);
 }
 
@@ -81,8 +91,8 @@ if ($form->is_cancelled()) {
 if ($data = $form->get_data()) {
 
     // Why do we loose those ?
-    $data->branch = optional_param('branch', '', PARAM_TEXT);
-    $data->maturity = optional_param('maturity', '', PARAM_TEXT);
+    $data->branch = trim(optional_param('branch', '', PARAM_TEXT));
+    $data->maturity = trim(optional_param('maturity', '', PARAM_TEXT));
 
     if (!$data->vid) {
         $vid = $instance->add_version($data);
@@ -93,7 +103,6 @@ if ($data = $form->get_data()) {
     } else {
         $vid = $instance->update_version($data);
     }
-
 
     $params = array('id' => $cm->id);
     redirect(new moodle_url('/mod/versionnedresource/view.php', $params));
