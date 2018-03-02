@@ -50,6 +50,8 @@ class mod_versionnedresource_renderer extends plugin_renderer_base {
     }
 
     public function viewlink() {
+        $str = '';
+
         if (has_capability('mod/versionnedresource:manageversions', $this->context)) {
             $managestr = get_string('manage', 'mod_versionnedresource');
             $params = array('vr' => $this->instance->id);
