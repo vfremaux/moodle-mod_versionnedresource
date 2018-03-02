@@ -94,14 +94,15 @@ foreach ($resources as $resource) {
     $icon = '';
     if (!empty($cm->icon)) {
         // Each resource file has an icon in 2.0.
-        $pixurl = $OUTPUT->pix_url($cm->icon);
-        $icon = '<img src="'.$pixurl.'" class="activityicon" alt="'.get_string('modulename', $cm->modname).'" /> ';
+        $attrs = array('class' => 'activityicon');
+        $icon = $OUTPUT->pix_icon($cm->icon, get_string('modulename', $cm->modname), 'mod_'.$cm->modname, $attrs);
     }
 
     $class = $resource->visible ? '' : 'class="dimmed"'; // Hidden modules are dimmed.
+    $viewurl = new moodle_url('/mod/versionnedresource/view.php', array('id' => $cm->id));
     $table->data[] = array (
         $printsection,
-        "<a $class $extra href=\"view.php?id=$cm->id\">".$icon.format_string($resource->name)."</a>",
+        '<a $class '.$extra.' href="'.$viewurl.'">'.$icon.format_string($resource->name).'</a>',
         format_module_intro('versionnedresource', $resource, $cm->id));
 }
 

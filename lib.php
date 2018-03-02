@@ -27,6 +27,14 @@
 defined('MOODLE_INTERNAL') || die;
 
 /**
+ * This function is not implemented in this plugin, but is needed to mark
+ * the vf documentation custom volume availability.
+ */
+function mod_versionnedresource_supports_feature() {
+    assert(1);
+}
+
+/**
  * List of features supported in Page module
  * @param string $feature FEATURE_xx constant for requested feature
  * @return mixed True if module supports feature, false if not, null if doesn't know
