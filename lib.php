@@ -26,12 +26,13 @@
 
 defined('MOODLE_INTERNAL') || die;
 
+require_once($CFG->dirroot.'/mod/versionnedresource/locallib.php');
+
 /**
- * This function is not implemented in this plugin, but is needed to mark
- * the vf documentation custom volume availability.
+ *
  */
-function mod_versionnedresource_supports_feature() {
-    assert(1);
+function mod_versionnedresource_supports_feature($feature) {
+    return versionned_resource::supports_feature($feature);
 }
 
 /**
