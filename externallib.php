@@ -301,7 +301,7 @@ class mod_versionnedresource_external extends external_api {
         // Explicit mapping avoids injection.
         switch ($vridsource) {
             case 'idnumber':
-                $vrid = self::get_vr_from_idnumber($vrid);
+                $vrs = self::get_vrs_from_idnumber($vrid);
                 break;
             default:
                 break;
@@ -309,7 +309,10 @@ class mod_versionnedresource_external extends external_api {
 
         if (versionned_resource::supports_feature('api/commit')) {
             include_once($CFG->dirroot.'/mod/versionnedresource/pro/lib.php');
-            $vid = mod_versionnedresource_commit($vrid, $draftitemid, $jsoninfo, $hideprevious);
+            foreach ($vrs as $vr) {
+                $vid = mod_versionnedresource_commit($vr->instance, $draftitemid, $jsoninfo, $hideprevious);
+            }
+            // Return last version number.
             return $vid;
         } else {
             throw new moodle_exception('unsupportedversion');
@@ -325,7 +328,7 @@ class mod_versionnedresource_external extends external_api {
         return new external_value(PARAM_INT, 'Version id');
     }
 
-    public static function get_vr_from_idnumber($idnumber) {
+    public static function get_vrs_from_idnumber($idnumber) {
         global $DB;
 
         $cms = $DB->get_records('course_modules', array('idnumber' => $idnumber));
@@ -334,12 +337,6 @@ class mod_versionnedresource_external extends external_api {
             throw new moodle_exception('nocoursemodulematch');
         }
 
-        if (count($cms) > 2) {
-            throw new moodle_exception('vridshouldbeunique');
-        }
-
-        $cm = array_pop($cms);
-
-        return $cm->instance;
+        return $cms;
     }
 }
