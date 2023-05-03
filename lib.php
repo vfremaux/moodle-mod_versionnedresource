@@ -31,8 +31,9 @@ require_once($CFG->dirroot.'/mod/versionnedresource/locallib.php');
 /**
  *
  */
-function mod_versionnedresource_supports_feature($feature) {
-    return versionned_resource::supports_feature($feature);
+
+function versionnedresource_supports_feature($feature = '', $getsupported = false) {
+    return versionned_resource::supports_feature($feature, $getsupported);
 }
 
 /**

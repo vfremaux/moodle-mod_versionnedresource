@@ -38,6 +38,7 @@ class version_form extends moodleform {
         $mform = $this->_form;
 
         $maxbytes = $COURSE->maxbytes; // TODO: add some setting.
+        $context = context_course::instance($COURSE->id);
         $this->fileoptions = array('subdirs' => false, 'maxfiles' => 1, 'maxbytes' => $maxbytes);
 
         $mform->addElement('hidden', 'vid');
@@ -46,7 +47,7 @@ class version_form extends moodleform {
         $mform->addElement('hidden', 'versionnedresourceid');
         $mform->setType('versionnedresourceid', PARAM_INT);
 
-        if (!$this->_customdata['vid']) {
+        if (!$this->_customdata['vid'] || has_capability('mod/versionnedresource:updateartifact', $context)) {
             $mform->addElement('filepicker', 'versionfile', get_string('artifact', 'versionnedresource'), $this->fileoptions);
         } else {
             $label = get_string('artifact', 'versionnedresource');

@@ -15,22 +15,16 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Version details.
- *
- * @package    mod_versionnedresource
- * @copyright  2017 Valery Fremaux (http://www.mylearningfactory.com)
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package   mod_versionnedresource
+ * @category  mod
+ * @copyright 2006 Valery Fremaux
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version   = 2023041600; // The current module version (Date: YYYYMMDDXX).
-$plugin->requires  = 2020060900; // Requires this Moodle version.
-$plugin->component = 'mod_versionnedresource'; // Full name of the plugin (used for diagnostics).
-$plugin->maturity = MATURITY_RC;
-$plugin->supported = [39, 311];
-$plugin->release = '3.9.0 (Build 2023041600)';
-
-// Non moodle attributes.
-$plugin->codeincrement = '3.9.0001';
-$plugin->privacy = 'dualrelease';
+$definitions = array(
+    'pro' => array(
+        'mode' => cache_store::MODE_APPLICATION
+    )
+);

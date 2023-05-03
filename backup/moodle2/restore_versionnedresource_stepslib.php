@@ -19,7 +19,7 @@
  *
  * @package     mod_versionnedresource
  * @category    mod
- * @copyright   2016 onwards Valery Fremaux (valery.fremaux@club-internet.fr)
+ * @copyright   2016 onwards Valery Fremaux (valery.fremaux@gmail.com)
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
