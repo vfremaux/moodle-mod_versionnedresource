@@ -35,10 +35,10 @@ class versionned_resource {
     }
 
     public function __get($key) {
-        if (isset($this->record->$key)) {
+        if (property_exists($this->record, $key)) {
             return $this->record->$key;
         } else {
-            throw new coding_exception('This attribute does no exist in versionnedresource');
+            throw new coding_exception('This attribute ('.$key.') does no exist in versionnedresource');
         }
     }
 
