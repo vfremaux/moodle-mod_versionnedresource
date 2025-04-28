@@ -19,6 +19,7 @@ $string['versionnedresource:view'] = 'Peut voir la ressource';
 $string['versionnedresource:download'] = 'Peut télécharger la ressource';
 $string['versionnedresource:viewhidden'] = 'Peut voir les versions cachées';
 $string['versionnedresource:manageversions'] = 'Peut gérer les versions';
+$string['versionnedresource:updateartifact'] = 'Peut modifier l\'artefact versionn';
 
 $string['addversion'] = 'Ajouter une version';
 $string['artifact'] = 'Ficher ressource';
@@ -52,3 +53,5 @@ $string['usedoc'] = 'Url de Documentation';
 $string['usevcs'] = 'Url du dépot versionné';
 $string['version'] = 'Version';
 $string['versiondata'] = 'Données de version';
+
+include(__DIR__.'/pro_additional_strings.php');

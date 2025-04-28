@@ -31,8 +31,14 @@ require_once($CFG->dirroot.'/mod/versionnedresource/locallib.php');
 /**
  *
  */
+<<<<<<< HEAD
 function mod_versionnedresource_supports_feature($feature) {
     return versionned_resource::supports_feature($feature);
+=======
+
+function versionnedresource_supports_feature($feature = '', $getsupported = false) {
+    return versionned_resource::supports_feature($feature, $getsupported);
+>>>>>>> MOODLE_405_STABLE
 }
 
 /**
@@ -62,6 +68,9 @@ function versionnedresource_supports($feature) {
             return true;
         case FEATURE_SHOW_DESCRIPTION:
             return true;
+        // 4.0
+        case FEATURE_MOD_PURPOSE:
+            return MOD_PURPOSE_CONTENT;
 
         default:
             return null;

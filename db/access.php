@@ -87,4 +87,15 @@ $capabilities = array(
         )
     ),
 
+    'mod/versionnedresource:updateartifact' => array(
+
+        'captype' => 'read',
+        'contextlevel' => CONTEXT_MODULE,
+        'legacy' => array(
+            'editingteacher' => CAP_ALLOW,
+            'coursecreator' => CAP_ALLOW,
+            'manager' => CAP_ALLOW
+        )
+    ),
+
 );

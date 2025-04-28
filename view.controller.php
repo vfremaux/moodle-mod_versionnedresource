@@ -85,15 +85,16 @@ class view_controller {
     }
 
     public static function info() {
-        return array('delete' => array(
-                        'versionid' => 'Numeric ID for update',
-                     ),
-                     'hide' => array(
-                        'versionid' => 'Numeric ID for update',
-                     ),
-                     'show' => array(
-                        'versionid' => 'Numeric ID for update',
-                     ),
-                     );
+        return array(
+            'delete' => array(
+               'versionid' => 'Numeric ID for update',
+            ),
+            'hide' => array(
+               'versionid' => 'Numeric ID for update',
+            ),
+            'show' => array(
+               'versionid' => 'Numeric ID for update',
+            ),
+        );
     }
 }

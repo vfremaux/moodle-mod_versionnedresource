@@ -19,6 +19,7 @@ $string['versionnedresource:view'] = 'Can see the resource';
 $string['versionnedresource:download'] = 'Can dowload the resource';
 $string['versionnedresource:viewhidden'] = 'Can see hidden versions';
 $string['versionnedresource:manageversions'] = 'Can manage versions';
+$string['versionnedresource:updateartifact'] = 'Can update stored artifact';
 
 $string['addversion'] = 'Add a version';
 $string['apitoken'] = 'Versionned Resource API';
@@ -64,3 +65,5 @@ $string['usevcs'] = 'Repository Url';
 $string['version'] = 'Version';
 $string['versiondata'] = 'Version data';$string['noversionsavailable'] = 'Pas de contenu disponible';
 $string['visible'] = 'Visible';
+
+include(__DIR__.'/pro_additional_strings.php');

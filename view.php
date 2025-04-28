@@ -26,15 +26,16 @@
 
 require('../../config.php');
 require_once($CFG->dirroot.'/mod/versionnedresource/locallib.php');
+require_once($CFG->dirroot.'/mod/versionnedresource/compatlib.php');
+
+use mod_versionnedresource\compat;
 
 $id = optional_param('id', 0, PARAM_INT); // Course Module ID.
 $vr = optional_param('vr', 0, PARAM_INT);  // VersionnedResource instance ID.
 $action = optional_param('what', '', PARAM_ALPHA);
 
 if ($vr) {
-    if (!$vresource = $DB->get_record('versionnedresource', array('id' => $vr))) {
-        print_error('invalidaccessparameter');
-    }
+    $vresource = $DB->get_record('versionnedresource', ['id' => $vr], '*', MUST_EXIST);
     $cm = get_coursemodule_from_instance('versionnedresource', $vresource->id, $vresource->course, false, MUST_EXIST);
 
 } else {
@@ -52,7 +53,7 @@ require_course_login($course, true, $cm);
 $context = context_module::instance($cm->id);
 require_capability('mod/versionnedresource:view', $context);
 
-if ($action) {
+if (!empty($action)) {
     include_once($CFG->dirroot.'/mod/versionnedresource/view.controller.php');
     $controller = new \mod_versionnedresource\view_controller($instance);
     $controller->receive($action);
@@ -65,6 +66,7 @@ $renderer = $PAGE->get_renderer('versionnedresource');
 $renderer->set_instance($instance);
 $renderer->set_context($context);
 
+compat::init_page($cm, $vresource);
 $PAGE->set_context($context);
 $PAGE->set_url($url);
 $PAGE->set_heading(get_string('pluginname', 'versionnedresource'));

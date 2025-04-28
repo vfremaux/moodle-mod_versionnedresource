@@ -25,12 +25,25 @@
  */
 defined('MOODLE_INTERNAL') || die();
 
-$key = 'versionnedresource/defaultusedoc';
-$label = get_string('configdefaultusedoc', 'versionnedresource');
-$desc = get_string('configdefaultusedoc_desc', 'versionnedresource');
-$settings->add(new admin_setting_configcheckbox($key, $label, $desc, 1));
+if ($ADMIN->fulltree) {
 
-$key = 'versionnedresource/defaultusevcs';
-$label = get_string('configdefaultusevcs', 'versionnedresource');
-$desc = get_string('configdefaultusevcs_desc', 'versionnedresource');
-$settings->add(new admin_setting_configcheckbox($key, $label, $desc, 1));
+	$key = 'versionnedresource/defaultusedoc';
+	$label = get_string('configdefaultusedoc', 'versionnedresource');
+	$desc = get_string('configdefaultusedoc_desc', 'versionnedresource');
+	$settings->add(new admin_setting_configcheckbox($key, $label, $desc, 1));
+	
+	$key = 'versionnedresource/defaultusevcs';
+	$label = get_string('configdefaultusevcs', 'versionnedresource');
+	$desc = get_string('configdefaultusevcs_desc', 'versionnedresource');
+	$settings->add(new admin_setting_configcheckbox($key, $label, $desc, 1));
+
+    if (learningtimecheck_supports_feature('emulate/community') == 'pro') {
+        include_once($CFG->dirroot.'/mod/versionnedresource/pro/prolib.php');
+        $promanager = mod_versionnedresource\pro_manager::instance();
+        $promanager->add_settings($ADMIN, $settings);
+    } else {
+        $label = get_string('plugindist', 'learningtimecheck');
+        $desc = get_string('plugindist_desc', 'learningtimecheck');
+        $settings->add(new admin_setting_heading('plugindisthdr', $label, $desc));
+    }
+}

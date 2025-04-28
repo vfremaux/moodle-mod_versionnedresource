@@ -35,10 +35,10 @@ class versionned_resource {
     }
 
     public function __get($key) {
-        if (isset($this->record->$key)) {
+        if (property_exists($this->record, $key)) {
             return $this->record->$key;
         } else {
-            throw new coding_exception('This attribute does no exist in versionnedresource');
+            throw new coding_exception('This attribute ('.$key.') does no exist in versionnedresource');
         }
     }
 
@@ -130,11 +130,13 @@ class versionned_resource {
      * implementation path where to fetch resources.
      * @param string $feature a feature key to be tested.
      */
-    static public function supports_feature($feature) {
+    static public function supports_feature($feature = '', $getsupported = false) {
         global $CFG;
         static $supports;
 
-        $config = get_config('report_trainingsessions');
+        if (!during_initial_install()) {
+            $config = get_config('versionnedresource');
+        }
 
         if (!isset($supports)) {
             $supports = array(
@@ -146,6 +148,10 @@ class versionned_resource {
                 ),
             );
             $prefer = array();
+        }
+
+        if ($getsupported) {
+            return $supports;
         }
 
         // Check existance of the 'pro' dir in plugin.
@@ -160,6 +166,11 @@ class versionned_resource {
             }
         } else {
             $versionkey = 'community';
+        }
+
+        if (empty($feature)) {
+            // Just return version.
+            return $versionkey;
         }
 
         list($feat, $subfeat) = explode('/', $feature);
